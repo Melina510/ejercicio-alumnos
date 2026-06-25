@@ -1,0 +1,370 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <title>Entrega QA - Simulador Mundial 2026</title>
+  <style>
+    @page {
+      size: A4;
+      margin: 18mm 16mm;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      color: #18202a;
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 11.2pt;
+      line-height: 1.45;
+      background: #fff;
+    }
+
+    .cover {
+      min-height: 88vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      border-bottom: 4px solid #2d7f9f;
+      page-break-after: always;
+    }
+
+    .eyebrow {
+      color: #2d7f9f;
+      font-size: 11pt;
+      font-weight: 700;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      margin: 16px 0 10px;
+      color: #121820;
+      font-size: 34pt;
+      line-height: 1.04;
+    }
+
+    h2 {
+      margin: 26px 0 10px;
+      color: #121820;
+      font-size: 18pt;
+      border-bottom: 2px solid #d7e7ee;
+      padding-bottom: 5px;
+    }
+
+    h3 {
+      margin: 18px 0 8px;
+      color: #1d5268;
+      font-size: 13.5pt;
+    }
+
+    p {
+      margin: 7px 0;
+    }
+
+    .lead {
+      max-width: 680px;
+      color: #374151;
+      font-size: 14pt;
+    }
+
+    .meta {
+      margin-top: 34px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      max-width: 620px;
+    }
+
+    .meta div,
+    .callout {
+      border: 1px solid #d7e7ee;
+      border-left: 5px solid #2d7f9f;
+      border-radius: 6px;
+      padding: 10px 12px;
+      background: #f8fbfc;
+    }
+
+    .meta strong {
+      display: block;
+      color: #121820;
+    }
+
+    .summary-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin: 12px 0 18px;
+    }
+
+    .metric {
+      border: 1px solid #d7e7ee;
+      border-radius: 6px;
+      padding: 10px;
+      background: #f8fbfc;
+    }
+
+    .metric strong {
+      display: block;
+      color: #1d5268;
+      font-size: 16pt;
+      line-height: 1.1;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 10px 0 18px;
+      page-break-inside: avoid;
+    }
+
+    th,
+    td {
+      border: 1px solid #d7dee5;
+      padding: 7px 8px;
+      vertical-align: top;
+    }
+
+    th {
+      color: #121820;
+      background: #edf6f8;
+      font-weight: 700;
+    }
+
+    code,
+    pre {
+      font-family: Consolas, "Courier New", monospace;
+    }
+
+    pre {
+      margin: 10px 0 16px;
+      padding: 10px;
+      border: 1px solid #d7dee5;
+      border-radius: 6px;
+      background: #f6f8fa;
+      white-space: pre-wrap;
+      font-size: 9.5pt;
+    }
+
+    .ok {
+      color: #087f5b;
+      font-weight: 700;
+    }
+
+    .warn {
+      color: #a15c00;
+      font-weight: 700;
+    }
+
+    .footer-note {
+      margin-top: 22px;
+      color: #5f6b76;
+      font-size: 9.5pt;
+    }
+
+    .page-break {
+      page-break-before: always;
+    }
+  </style>
+</head>
+<body>
+  <section class="cover">
+    <div class="eyebrow">Clase 5 - QA y Testing Potenciado por GenIA</div>
+    <h1>Informe de Entrega QA<br>Simulador Mundial 2026</h1>
+    <p class="lead">
+      Resultado del ejercicio de analisis estatico, ejecucion de tests, SonarQube,
+      Quality Gate y priorizacion RTC de hallazgos para evaluar preparacion hacia produccion.
+    </p>
+    <div class="meta">
+      <div><strong>Proyecto</strong> simulador-mundial</div>
+      <div><strong>Fecha</strong> 18/06/2026</div>
+      <div><strong>Stack QA</strong> pytest, coverage, Ruff, SonarQube</div>
+      <div><strong>Decision final</strong> <span class="warn">GO con observaciones</span></div>
+    </div>
+  </section>
+
+  <h2>1. Resumen Ejecutivo</h2>
+  <p>
+    El proyecto pasa la suite automatizada completa y el analisis SonarQube queda en estado
+    satisfactorio, sin bugs ni vulnerabilidades detectadas. La cobertura supera el umbral minimo
+    recomendado del 80%. La decision es <strong>GO con observaciones</strong> porque quedan
+    code smells y hallazgos de Ruff para limpiar antes de un GO pleno de produccion.
+  </p>
+
+  <div class="summary-grid">
+    <div class="metric"><strong>82/82</strong> tests automatizados pasaron</div>
+    <div class="metric"><strong>86.5%</strong> cobertura en SonarQube</div>
+    <div class="metric"><strong>0</strong> bugs y vulnerabilidades</div>
+    <div class="metric"><strong>OK</strong> Quality Gate actual</div>
+    <div class="metric"><strong>15</strong> hallazgos Ruff</div>
+    <div class="metric"><strong>24</strong> code smells SonarQube</div>
+  </div>
+
+  <div class="callout">
+    Dashboard SonarQube:
+    <code>http://localhost:9000/dashboard?id=simulador-mundial</code>
+  </div>
+
+  <h3>Resultado SonarQube</h3>
+  <table>
+    <tr><th>Item</th><th>Resultado verificado</th></tr>
+    <tr><td>Proyecto analizado</td><td><code>simulador-mundial</code></td></tr>
+    <tr><td>Nombre visible</td><td>Simulador Mundial</td></tr>
+    <tr><td>Estado del analisis</td><td class="ok">Analysis successful</td></tr>
+    <tr><td>Quality Gate</td><td class="ok">OK</td></tr>
+    <tr><td>URL del dashboard</td><td><code>http://localhost:9000/dashboard?id=simulador-mundial</code></td></tr>
+  </table>
+
+  <h2>2. Alcance del Ejercicio</h2>
+  <table>
+    <tr><th>Parte</th><th>Actividad</th><th>Resultado</th></tr>
+    <tr>
+      <td>Parte 1</td>
+      <td>Analisis estatico con Ruff y priorizacion RTC</td>
+      <td>15 hallazgos clasificados por prioridad</td>
+    </tr>
+    <tr>
+      <td>Parte 2</td>
+      <td>SonarQube local y scanner del proyecto</td>
+      <td>Analisis exitoso para <code>simulador-mundial</code></td>
+    </tr>
+    <tr>
+      <td>Parte 3</td>
+      <td>Quality Gate con umbrales reales</td>
+      <td>Quality Gate actual OK; umbral productivo recomendado documentado</td>
+    </tr>
+    <tr>
+      <td>Parte 4</td>
+      <td>Interpretacion y priorizacion con prompt RTC</td>
+      <td>Plan de fixes priorizado por riesgo</td>
+    </tr>
+  </table>
+
+  <h2>3. Evidencia de Tests</h2>
+  <table>
+    <tr><th>Suite</th><th>Archivo</th><th>Resultado</th></tr>
+    <tr><td>QA Clase 5</td><td><code>tests/test_qa_clase5.py</code></td><td class="ok">3 passed, 0 failed</td></tr>
+    <tr><td>E2E / API existente</td><td><code>tests/e2e</code></td><td class="ok">10 passed, 0 failed</td></tr>
+    <tr><td>Suite completa</td><td><code>tests/</code></td><td class="ok">82 passed, 0 failed</td></tr>
+  </table>
+
+  <h3>Casos criticos cubiertos</h3>
+  <table>
+    <tr><th>ID</th><th>Caso</th><th>Estado</th></tr>
+    <tr><td>SIM-CHAMP-002</td><td>DB vacia: champion coincide con final.winner</td><td class="ok">Verde</td></tr>
+    <tr><td>SIM-CHAMP-003</td><td>final.winner pertenece a los finalistas</td><td class="ok">Verde</td></tr>
+    <tr><td>DASH-CHAMP-001</td><td>Dashboard refleja el campeon de la simulacion</td><td class="ok">Verde</td></tr>
+  </table>
+
+  <h3>Comandos ejecutados</h3>
+  <pre>.\.venv\Scripts\python.exe -m ruff check .
+.\.venv\Scripts\python.exe -m pytest --cov=. --cov-report=xml
+.\.venv\Scripts\pysonar.exe --sonar-host-url=http://localhost:9000 --sonar-project-key=simulador-mundial --sonar-project-name="Simulador Mundial" --sonar-python-coverage-report-paths=coverage.xml</pre>
+
+  <h2>4. SonarQube y Quality Gate</h2>
+  <p>
+    El analisis de SonarQube fue ejecutado y procesado correctamente para el proyecto
+    <code>simulador-mundial</code>. El resultado final del dashboard queda en
+    <strong class="ok">Quality Gate OK</strong>, sin bugs ni vulnerabilidades reportadas.
+  </p>
+  <table>
+    <tr><th>Metrica</th><th>Resultado</th><th>Evaluacion</th></tr>
+    <tr><td>Quality Gate actual</td><td>OK</td><td class="ok">Cumple</td></tr>
+    <tr><td>Coverage</td><td>86.5%</td><td class="ok">Cumple umbral >= 80%</td></tr>
+    <tr><td>Bugs</td><td>0</td><td class="ok">Cumple</td></tr>
+    <tr><td>Vulnerabilities</td><td>0</td><td class="ok">Cumple</td></tr>
+    <tr><td>Duplicated lines density</td><td>0.0%</td><td class="ok">Cumple</td></tr>
+    <tr><td>Code smells</td><td>24</td><td class="warn">Observacion</td></tr>
+    <tr><td>NCLOC</td><td>767</td><td>Informativo</td></tr>
+  </table>
+
+  <h3>Quality Gate recomendado para produccion</h3>
+  <table>
+    <tr><th>Metrica</th><th>Umbral</th></tr>
+    <tr><td>Bugs</td><td>0</td></tr>
+    <tr><td>Vulnerabilities</td><td>0</td></tr>
+    <tr><td>Coverage</td><td>>= 80%</td></tr>
+    <tr><td>Duplicated lines density</td><td><= 3%</td></tr>
+    <tr><td>Code smells</td><td><= 20</td></tr>
+    <tr><td>Tests automatizados</td><td>100% passing</td></tr>
+  </table>
+
+  <p>
+    Nota: el token usado permite consultar SonarQube, pero no crear/asignar Quality Gates desde API
+    (<code>actions.create=false</code>). Por eso el Quality Gate productivo queda documentado como
+    criterio recomendado de evaluacion.
+  </p>
+
+  <h2>5. Smoke Test Frontend</h2>
+  <p>
+    Estado general: <strong class="warn">GO con observaciones</strong>. La suite automatizada
+    valida carga del frontend por HTML, simulacion, dashboard, bracket y consistencia del campeon.
+    Quedan pendientes validaciones visuales/manuales: spinner, click real del boton y responsive
+    mobile en navegador.
+  </p>
+  <table>
+    <tr><th>ID</th><th>Validacion</th><th>Estado</th></tr>
+    <tr><td>FE-SMOKE-001</td><td>La app carga y se ve <code>#teamsContainer</code></td><td class="ok">Paso automatizado</td></tr>
+    <tr><td>FE-SMOKE-002</td><td>Boton <code>#btnSimular</code> dispara simulacion</td><td class="warn">Paso parcial</td></tr>
+    <tr><td>FE-SMOKE-003</td><td>Spinner aparece y desaparece</td><td class="warn">Pendiente visual</td></tr>
+    <tr><td>FE-SMOKE-005</td><td>Campeon visible en <code>#championResult</code></td><td class="warn">Paso parcial</td></tr>
+    <tr><td>FE-SMOKE-006</td><td>Dashboard muestra metricas</td><td class="ok">Paso automatizado</td></tr>
+    <tr><td>FE-SMOKE-007</td><td>Bracket muestra eliminatorias y ganadores</td><td class="ok">Paso automatizado</td></tr>
+    <tr><td>FE-SMOKE-008</td><td>Usabilidad mobile 375px</td><td class="warn">Pendiente visual</td></tr>
+  </table>
+
+  <h2>6. Priorizacion RTC de Hallazgos</h2>
+  <table>
+    <tr><th>Prioridad</th><th>Hallazgo</th><th>Riesgo</th><th>Accion propuesta</th></tr>
+    <tr>
+      <td>P1</td>
+      <td><code>services/simulator_service.py</code>: variable <code>y</code> sin uso en validacion</td>
+      <td>Puede ocultar logica incompleta sobre jugadores requeridos</td>
+      <td>Eliminar la variable o reemplazarla por validacion explicita si corresponde a la regla de negocio</td>
+    </tr>
+    <tr>
+      <td>P1</td>
+      <td>SonarQube: 24 code smells vs umbral recomendado <= 20</td>
+      <td>Deuda tecnica superior al umbral productivo</td>
+      <td>Atacar primero smells vinculados a simulacion y servicios</td>
+    </tr>
+    <tr>
+      <td>P2</td>
+      <td>Imports sin uso en servicios y tests</td>
+      <td>Ruido y menor mantenibilidad</td>
+      <td>Remover imports con <code>ruff check . --fix</code> y revisar cambios</td>
+    </tr>
+    <tr>
+      <td>P2</td>
+      <td><code>schemas/team.py</code>: import a mitad del modulo</td>
+      <td>Orden de imports fragil; posible dependencia circular</td>
+      <td>Reordenar schema o aislar el <code>model_rebuild()</code></td>
+    </tr>
+    <tr>
+      <td>P3</td>
+      <td>f-strings sin placeholders</td>
+      <td>Estilo innecesario, sin impacto funcional</td>
+      <td>Quitar prefijo <code>f</code></td>
+    </tr>
+  </table>
+
+  <h2>7. Conclusion</h2>
+  <p>
+    La conclusion del ejercicio es <strong class="warn">GO con observaciones</strong>. El proyecto
+    demuestra buen nivel de confianza funcional: los tests automatizados pasan, la regla critica
+    <code>champion = final.winner</code> queda cubierta, SonarQube no reporta bugs ni vulnerabilidades
+    y la cobertura supera el 80%.
+  </p>
+  <p>
+    Para pasar a GO pleno de produccion se recomienda limpiar Ruff, bajar los code smells a 20 o menos,
+    y completar las validaciones visuales manuales del frontend en navegador real.
+  </p>
+
+  <p class="footer-note">
+    Evidencia complementaria disponible en el proyecto: QA_REPORT.md, SMOKE_TEST_REPORT.md,
+    allure-report.html y dashboard local de SonarQube.
+  </p>
+</body>
+</html>

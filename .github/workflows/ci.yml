@@ -1,0 +1,120 @@
+name: CI/CD Mundial 2026
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+jobs:
+  lint:
+    name: "① Lint"
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Set up Python 3.12
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Run Ruff
+        run: |
+          pip install ruff
+          ruff check .
+
+  tests:
+    name: "② Tests + Coverage"
+    needs: lint
+    runs-on: ubuntu-latest
+    env:
+      DATABASE_URL: sqlite:///:memory:
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Set up Python 3.12
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Run tests
+        run: |
+          pip install -r requirements.txt
+          python -m pytest tests/ --cov=. --cov-report=xml --ignore=tests/test_frontend_smoke.py -q
+      - name: Upload coverage report
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage-report
+          path: coverage.xml
+
+  quality-gate:
+    name: "③ Quality Gate"
+    needs: tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download coverage report
+        uses: actions/download-artifact@v4
+        with:
+          name: coverage-report
+      - name: Check coverage threshold
+        run: |
+          python - <<'PY'
+          import sys
+          import xml.etree.ElementTree as ET
+
+          root = ET.parse("coverage.xml").getroot()
+          coverage = float(root.attrib["line-rate"])
+          percent = coverage * 100
+          if coverage < 0.80:
+              print(f"Quality Gate FAIL: cobertura {percent:.2f}% < 80%")
+              sys.exit(1)
+          print(f"Quality Gate PASS: cobertura {percent:.2f}% >= 80%")
+          PY
+
+  simulate:
+    name: "④ Simulate Mundial + Static Site"
+    needs: quality-gate
+    runs-on: ubuntu-latest
+    env:
+      DATABASE_URL: sqlite:///:memory:
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Set up Python 3.12
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Generate static site
+        run: |
+          pip install -r requirements.txt
+          python seed_and_simulate.py
+      - name: Validate static site
+        run: test -f dist/index.html
+      - name: Print champion
+        run: |
+          python - <<'PY'
+          import json
+
+          with open("dist/data/simulation.json", encoding="utf-8") as f:
+              data = json.load(f)
+          print(f"Campeon del mundo: {data['champion']}")
+          PY
+      - name: Upload GitHub Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist/
+
+  deploy:
+    name: "⑤ Deploy GitHub Pages"
+    needs: simulate
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
+    environment: github-pages
+    steps:
+      - name: Deploy to GitHub Pages
+        uses: actions/deploy-pages@v4
+
+# PowerShell local: $env:DATABASE_URL="sqlite:///:memory:"; python seed_and_simulate.py
