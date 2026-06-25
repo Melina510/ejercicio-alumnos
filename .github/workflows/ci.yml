@@ -13,7 +13,7 @@ permissions:
 
 jobs:
   lint:
-    name: "① Lint"
+    name: "1 Lint"
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -28,11 +28,11 @@ jobs:
           ruff check .
 
   tests:
-    name: "② Tests + Coverage"
+    name: "2 Tests + Coverage"
     needs: lint
     runs-on: ubuntu-latest
     env:
-      DATABASE_URL: sqlite:///:memory:
+      DATABASE_URL: "sqlite:///:memory:"
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -51,7 +51,7 @@ jobs:
           path: coverage.xml
 
   quality-gate:
-    name: "③ Quality Gate"
+    name: "3 Quality Gate"
     needs: tests
     runs-on: ubuntu-latest
     steps:
@@ -75,11 +75,11 @@ jobs:
           PY
 
   simulate:
-    name: "④ Simulate Mundial + Static Site"
+    name: "4 Simulate Mundial + Static Site"
     needs: quality-gate
     runs-on: ubuntu-latest
     env:
-      DATABASE_URL: sqlite:///:memory:
+      DATABASE_URL: "sqlite:///:memory:"
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -108,7 +108,7 @@ jobs:
           path: dist/
 
   deploy:
-    name: "⑤ Deploy GitHub Pages"
+    name: "5 Deploy GitHub Pages"
     needs: simulate
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/main'
