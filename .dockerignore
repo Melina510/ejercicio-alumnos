@@ -1,0 +1,14 @@
+.git
+.venv
+.pytest_cache
+.ruff_cache
+.sonar
+.sonar-run
+__pycache__
+*.pyc
+.coverage
+coverage.xml
+allure-results
+dist
+worldcup.db
+ENTREGA_EJERCICIO_QA_SIMULADOR_MUNDIAL_2026.pdf
